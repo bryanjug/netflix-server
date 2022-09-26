@@ -4,8 +4,6 @@ const app = express();
 const fs = require('fs');
 const axios = require('axios');
 const dotenv = require('dotenv');
-const { setInterval, clearInterval } = require('timers/promises');
-const internal = require('stream');
 dotenv.config();
 const key = process.env.API_TOKEN;
 const db = process.env.DATABASE;
@@ -24,7 +22,6 @@ var yyyy = today.getFullYear();
 today = mm + '/' + dd + '/' + yyyy;
 
 let data = {
-  "lastUpdate":`${today}`,
   "new": {
     "movies": {
 
@@ -150,10 +147,7 @@ async function UpdateDB() {
 }
 
 async function SetTimer() {
-  let interval = setInterval(GetDataAndUpdate, 10000);
-  if (interval === 10) {
-    clearInterval(interval)
-  }
+  setInterval(GetDataAndUpdate, 80000000);
 }
 
 SetTimer();

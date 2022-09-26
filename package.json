@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/bryanjug/netflix-server/issues"
   },
-  "homepage": "https://github.com/bryanjug/netflix-server#readme"
+  "homepage": "https://github.com/bryanjug/netflix-server#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.21"
+  }
 }

@@ -5,21 +5,18 @@ const fs = require('fs');
 const axios = require('axios');
 const dotenv = require('dotenv');
 dotenv.config();
+let cors = require("cors");
+app.use(cors());
+
 const key = process.env.API_TOKEN;
 const db = process.env.DATABASE;
 const movieDB = process.env.MOVIE_DB;
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ limit: "550mb", extended: true, parameterLimit: 550000 }))
+
+const PORT = 3001;
 
 const routes = require('./routes/routes.js')(app, fs);
-
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-var yyyy = today.getFullYear();
-
-today = mm + '/' + dd + '/' + yyyy;
 
 let data = {
   "new": {
@@ -43,8 +40,6 @@ let data = {
 
   }
 };
-
-let newGenreData = {};
 
 function GetDataAndUpdate () {
     axios.get(`${movieDB}movie/latest?api_key=${key}`)
@@ -113,19 +108,20 @@ function GetDataAndUpdate () {
 }
 
 async function GetGenreDataAndUpdate() {
-  let length = data.genres.genres.length;
-  let genres = data.genres.genres;
+  let genres = data.genres.genres
+  let length = genres.length;
+  let newGenreData = {};
 
   for (i = 0; i < length; i++) {
     let oldObj = {id: genres[i].id, name: genres[i].name};
-    
+
     await axios.get(`${movieDB}discover/movie?api_key=${key}&with_genres=${genres[i].id}`)
     .then(function (response) {
       // handle success
-      console.log("Successfully requested genre data.");
-      let result = {result: response.data}
-      oldObj = {...oldObj, result}
-      newGenreData = JSON.stringify(oldObj)
+      console.log(`Successfully requested ${genres[i].id} genre data.`);
+      let results = response.data.results
+      oldObj = {...oldObj, results}
+      newGenreData[i] = oldObj
     })
     .catch(function (error) {
       // handle error
@@ -133,25 +129,27 @@ async function GetGenreDataAndUpdate() {
     })  
   }
   data.genres = newGenreData;
-
-  UpdateDB();
   
-  console.log("Completed function.")
+  UpdateDB();
 }
 
 async function UpdateDB() {
-  await axios.put(`${db}users/1`, {data})
-  .then(function (response) {
-    console.log("DB Updated")
-  })
+  fs.writeFile('./data/db.json', JSON.stringify(data), 'utf8',  (err) => {         
+    if (err) throw err
+    console.log("Updated...")     
+  });
 }
 
 async function SetTimer() {
-  setInterval(GetDataAndUpdate, 80000000);
+  setInterval(GetDataAndUpdate, 36000000);
+  //for debugging
+  //GetDataAndUpdate() 
 }
 
 SetTimer();
 
-const server = app.listen(3001, () => {
-    console.log('listening on port %s...', server.address().port);
-});
+console.log("Server is working")
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+})

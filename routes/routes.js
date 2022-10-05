@@ -1,5 +1,5 @@
 // import other routes
-const userRoutes = require('./users');
+const dbRoutes = require('./db');
 
 const appRouter = (app, fs) => {
 
@@ -7,9 +7,9 @@ const appRouter = (app, fs) => {
     app.get('/', (req, res) => {
         res.send('welcome to the development api-server');
     });
-
+    
     // // other routes
-    userRoutes(app, fs);
+    dbRoutes(app, fs);
 
 };
 

@@ -9,7 +9,6 @@ let cors = require("cors");
 app.use(cors());
 
 const key = process.env.API_TOKEN;
-const db = process.env.DATABASE;
 const movieDB = process.env.MOVIE_DB;
 
 app.use(bodyParser.urlencoded({ limit: "550mb", extended: true, parameterLimit: 550000 }))
@@ -129,7 +128,29 @@ async function GetGenreDataAndUpdate() {
     })  
   }
   data.genres = newGenreData;
-  
+
+  UpdatePopularMovie()
+}
+
+async function UpdatePopularMovie() {
+  let top = data.popularMovies.results[0];
+  console.log(top)
+
+  await axios.get(`${movieDB}movie/${top.id}?api_key=${key}&append_to_response=videos`)
+    .then(function (response) {
+      // handle success
+      console.log(`Successfully requested top popular movie id: ${top.id} data.`);
+      let results = response.data;
+      let newObj = {...top, results}
+
+      data.popularMovies.results[0] = newObj
+      console.log("Updated top popular movie: ", data.popularMovies.results[0])
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })  
+
   UpdateDB();
 }
 
@@ -143,7 +164,7 @@ async function UpdateDB() {
 async function SetTimer() {
   setInterval(GetDataAndUpdate, 36000000);
   //for debugging
-  //GetDataAndUpdate() 
+  // GetDataAndUpdate() 
 }
 
 SetTimer();

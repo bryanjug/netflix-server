@@ -114,191 +114,42 @@ async function UpdatePopularMovie() {
 }
 
 async function UpdatePopular() {
-  let TVShows = data.popularTVShows;
-  let movies = data.popularMovies.results;
   //Movies
-  await axios.get(`${movieDB}movie/popular?api_key=${key}`)
-    .then(function (response) {
-      // handle success
-      console.log("Successfully requested popular movie data.");
-      data.popularMovies = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-
-  await axios.get(`${movieDB}movie/popular?api_key=${key}&page=2`)
-    .then(function (response) {
-      data.popularMovies2 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })  
-
-  await axios.get(`${movieDB}movie/popular?api_key=${key}&page=3`)
-    .then(function (response) {
-      data.popularMovies3 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })  
-
-  await axios.get(`${movieDB}movie/popular?api_key=${key}&page=4`)
-    .then(function (response) {
-      data.popularMovies4 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })  
-
-  await axios.get(`${movieDB}movie/popular?api_key=${key}&page=5`)
-    .then(function (response) {
-      data.popularMovies5 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })  
-
-  await axios.get(`${movieDB}movie/popular?api_key=${key}&page=6`)
-    .then(function (response) {
-      data.popularMovies6 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })  
-  await axios.get(`${movieDB}movie/popular?api_key=${key}&page=7`)
-    .then(function (response) {
-      data.popularMovies7 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })  
-  await axios.get(`${movieDB}movie/popular?api_key=${key}&page=8`)
-    .then(function (response) {
-      data.popularMovies8 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })  
-  await axios.get(`${movieDB}movie/popular?api_key=${key}&page=9`)
-    .then(function (response) {
-      data.popularMovies9 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })  
-
-  await axios.get(`${movieDB}movie/popular?api_key=${key}&page=10`)
-    .then(function (response) {
-      data.popularMovies10 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })  
-
+  for (i = 1; i < 11; i++) {
+    let dataName;
+    await axios.get(`${movieDB}movie/popular?api_key=${key}&page=${i}`)
+      .then(function (response) {
+        // handle success
+        if (i === 1) {
+          dataName = "popularMovies";
+        } else {
+          dataName = "popularMovies" + i;
+        }
+        data[`${dataName}`] = response.data;
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+  }
   //TV Shows
-  await axios.get(`${movieDB}tv/popular?api_key=${key}&page=1`)
-    .then(function (response) {
-      // handle success
-      data.popularTVShows = response.data;
-    })
-
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-
-  await axios.get(`${movieDB}tv/popular?api_key=${key}&page=2`)
-    .then(function (response) {
-      // handle success
-      data.popularTVShows2 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-
-  await axios.get(`${movieDB}tv/popular?api_key=${key}&page=3`)
-    .then(function (response) {
-      data.popularTVShows3 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-
-  await axios.get(`${movieDB}tv/popular?api_key=${key}&page=4`)
-    .then(function (response) {
-      data.popularTVShows4 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-
-  await axios.get(`${movieDB}tv/popular?api_key=${key}&page=5`)
-    .then(function (response) {
-      data.popularTVShows5 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-
-  await axios.get(`${movieDB}tv/popular?api_key=${key}&page=6`)
-    .then(function (response) {
-      data.popularTVShows6 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-
-  await axios.get(`${movieDB}tv/popular?api_key=${key}&page=7`)
-    .then(function (response) {
-      data.popularTVShows7 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-
-  await axios.get(`${movieDB}tv/popular?api_key=${key}&page=8`)
-    .then(function (response) {
-      data.popularTVShows8 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-
-  await axios.get(`${movieDB}tv/popular?api_key=${key}&page=9`)
-    .then(function (response) {
-      data.popularTVShows9 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-  
-  await axios.get(`${movieDB}tv/popular?api_key=${key}&page=10`)
-    .then(function (response) {
-      data.popularTVShows10 = response.data;
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
+  for (i = 1; i < 11; i++) {
+    let dataName;
+    await axios.get(`${movieDB}tv/popular?api_key=${key}&page=${i}`)
+      .then(function (response) {
+        // handle success
+        if (i === 1) {
+          dataName = "popularTVShows";
+        } else {
+          dataName = "popularTVShows" + i;
+        }
+        data[`${dataName}`] = response.data;
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+  }
 
   UpdatePopularMovie()
 }
@@ -311,9 +162,9 @@ async function UpdateDB() {
 }
 
 async function SetTimer() {
-  setInterval(GetDataAndUpdate, 36000000);
+  //setInterval(GetDataAndUpdate, 36000000);
   //for debugging
-  //GetDataAndUpdate() 
+  GetDataAndUpdate() 
 }
 
 SetTimer();

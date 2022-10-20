@@ -77,7 +77,6 @@ async function GetGenreDataAndUpdate() {
     await axios.get(`${movieDB}discover/movie?api_key=${key}&with_genres=${genres[i].id}`)
     .then(function (response) {
       // handle success
-      console.log(`Successfully requested ${genres[i].id} genre data.`);
       let results = response.data.results
       oldObj = {...oldObj, results}
       newGenreData[i] = oldObj

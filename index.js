@@ -108,8 +108,8 @@ async function UpdatePopularMovie() {
       // handle error
       console.log(error);
     })  
-
-    UpdateDB();
+    await GetGenres();
+    await UpdateDB();
 }
 
 async function UpdatePopular() {
@@ -151,6 +151,32 @@ async function UpdatePopular() {
   }
 
   UpdatePopularMovie()
+}
+
+async function GetGenres () {
+    await axios.get(`${movieDB}genre/movie/list?api_key=${key}&language=en-US`)
+        .then(function (response) {
+            let firstVideoIDs = data.popularMovies.results[0].genre_ids;
+            CompareGenres(response.data, firstVideoIDs)
+        })
+}
+//adds genres text to first popular movie
+async function CompareGenres(genres, firstVideoIDs) {
+    genres = genres.genres;
+    let string = "";
+
+    for (let i = 0; i < firstVideoIDs.length; i++) {
+        for (let j = 0; j < Object.keys(genres).length; j++) {
+            if (i === firstVideoIDs.length - 1 && firstVideoIDs[i] === genres[j].id) {
+                string += genres[j].name;
+            } else if (firstVideoIDs[i] === genres[j].id) {
+                string += genres[j].name + " • ";
+            }
+        }
+    }
+    data.popularMovies.results[0].genres = string;
+    
+    console.log(data.popularMovies.results[0].genres)
 }
 
 async function UpdateDB() {

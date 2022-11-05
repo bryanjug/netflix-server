@@ -187,9 +187,9 @@ async function UpdateDB() {
 }
 
 async function SetTimer() {
-  //setInterval(GetDataAndUpdate, 36000000);
+  setInterval(GetDataAndUpdate, 36000000);
   //for debugging
-  GetDataAndUpdate() 
+  //GetDataAndUpdate() 
 }
 
 SetTimer();

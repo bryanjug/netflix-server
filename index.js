@@ -13,7 +13,7 @@ const movieDB = process.env.MOVIE_DB;
 
 app.use(bodyParser.urlencoded({ limit: "5550mb", extended: true, parameterLimit: 5550000 }))
 
-const PORT = 3001;
+const PORT = 80;
 
 const routes = require('./routes/routes.js')(app, fs);
 

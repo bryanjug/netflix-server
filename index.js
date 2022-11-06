@@ -10,10 +10,9 @@ app.use(cors());
 
 const key = process.env.API_TOKEN;
 const movieDB = process.env.MOVIE_DB;
+const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ limit: "5550mb", extended: true, parameterLimit: 5550000 }))
-
-const PORT = 80;
 
 const routes = require('./routes/routes.js')(app, fs);
 

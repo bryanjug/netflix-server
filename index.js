@@ -189,6 +189,7 @@ async function SetTimer() {
   setInterval(GetDataAndUpdate, 36000000);
   //for debugging
   //GetDataAndUpdate() 
+  //for railway update
 }
 
 SetTimer();

@@ -4,7 +4,8 @@
   "description": "This starter kit contains everything you'll need to create your very own Node-based API server, using Express JS and configured to serve JSON files for data.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

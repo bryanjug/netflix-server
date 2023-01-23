@@ -193,13 +193,16 @@ async function SetTimer() {
 SetTimer();
 
 console.log("Server is working")
+
 const dataPath = './data/db.json';
+
 app.get('/', (req, res) => {
     fs.readFile(dataPath, 'utf8', (err, data) => {
         if (err) {
             throw err;
         }
-
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
         res.send(JSON.parse(data));
     });
 });

@@ -10,7 +10,7 @@ app.use(cors());
 
 const key = process.env.API_TOKEN;
 const movieDB = process.env.MOVIE_DB;
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 app.use(bodyParser.urlencoded({ limit: "5550mb", extended: true, parameterLimit: 5550000 }))
 
@@ -193,12 +193,18 @@ async function SetTimer() {
 SetTimer();
 
 console.log("Server is working")
-
+const dataPath = './data/db.json';
 app.get('/', (req, res) => {
-    res.send('welcome to the development api-server');
+    fs.readFile(dataPath, 'utf8', (err, data) => {
+        if (err) {
+            throw err;
+        }
+
+        res.send(JSON.parse(data));
+    });
 });
 
-const dataPath = './data/db.json';
+
 
 // helper methods
 const readFile = (callback, returnJson = false, filePath = dataPath, encoding = 'utf8') => {

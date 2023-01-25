@@ -186,10 +186,10 @@ async function UpdateDB() {
 }
 
 async function SetTimer() {
-    //timer count down to rerun server, remove if railway is still counting down
-//   setInterval(GetDataAndUpdate, 68000000);
-  //for debugging
-  GetDataAndUpdate() 
+    //timer count down to rerun server
+    setInterval(GetDataAndUpdate, 68000000);
+    //for debugging
+    //GetDataAndUpdate() 
 }
 
 SetTimer();
